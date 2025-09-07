@@ -35,7 +35,7 @@ fun ExpenseListScreen(
     
     // Filter expenses based on search and filter
     val filteredExpenses = remember(expenses, searchQuery, selectedFilter) {
-        expenses.filter { expense ->
+        expenses.filter { expense: Expense ->
             val matchesSearch = searchQuery.isEmpty() || 
                 expense.merchant.contains(searchQuery, ignoreCase = true) ||
                 expense.description?.contains(searchQuery, ignoreCase = true) == true ||

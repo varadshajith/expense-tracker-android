@@ -38,6 +38,10 @@ object SmsParser {
                        messageBody.contains("INR") ||
                        messageBody.contains("rupees")
         
+        val hasUPIKeywords = UPI_KEYWORDS.any { keyword ->
+            messageUpper.contains(keyword.uppercase())
+        }
+        
         return isFromUPIProvider && (hasUPIKeywords || hasAmount)
     }
     
@@ -66,7 +70,35 @@ object SmsParser {
     private fun extractAmount(messageBody: String): Double {
         // Look for patterns like ₹100, Rs.100, INR 100, etc.
         val amountPatterns = listOf(
-            Regex("₹\s*(\d+(?:\.\d{2})?)"),
-            Regex("Rs\.?\s*(\d+(?:\.\d{2})?)"),
-            Regex("INR\s*(\d+(?:\.\d{2})?)"),
-            Regex(
+            Regex("""₹\s*(\d+(?:\.\d{2})?)"""),
+            Regex("""Rs\.?\s*(\d+(?:\.\d{2})?)"""),
+            Regex("""INR\s*(\d+(?:\.\d{2})?)"""),
+            Regex("""rupees\s*(\d+(?:\.\d{2})?)""")
+        )
+        
+        for (pattern in amountPatterns) {
+            val match = pattern.find(messageBody)
+            if (match != null) {
+                return match.groupValues[1].toDouble()
+            }
+        }
+        
+        return 0.0
+    }
+    
+    /**
+     * Extract merchant from SMS message
+     */
+    private fun extractMerchant(messageBody: String): String {
+        // Look for patterns like "to [Merchant Name]"
+        val merchantPattern = Regex("""to\s+([a-zA-Z0-9\s]+)""")
+        val match = merchantPattern.find(messageBody)
+        
+        return match?.groupValues?.get(1)?.trim() ?: ""
+    }
+}
+
+data class UPITransactionDetails(
+    val amount: Double,
+    val merchant: String
+)

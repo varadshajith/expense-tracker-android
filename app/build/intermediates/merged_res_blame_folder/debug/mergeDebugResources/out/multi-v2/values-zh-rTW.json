@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.expensetracker.app-mergeDebugResources-73:/values-zh-rTW/values-zh-rTW.xml",
+            "outputFile": "com.expensetracker.app-mergeDebugResources-74:/values-zh-rTW/values-zh-rTW.xml",
             "map": [
                 {
                     "source": "C:\\Users\\v3800\\.gradle\\caches\\9.0-milestone-1\\transforms\\9176b48d4f329f73712e923ad2f6e573\\transformed\\material-1.13.0\\res\\values-zh-rTW\\values-zh-rTW.xml",

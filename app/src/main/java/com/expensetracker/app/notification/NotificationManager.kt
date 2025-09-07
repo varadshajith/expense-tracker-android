@@ -11,6 +11,7 @@ import androidx.core.app.NotificationManagerCompat
 import com.expensetracker.app.MainActivity
 import com.expensetracker.app.R
 import com.expensetracker.app.utils.SmsParser
+import com.expensetracker.app.utils.UPITransactionDetails
 
 class ExpenseNotificationManager(private val context: Context) {
     
@@ -71,7 +72,7 @@ class ExpenseNotificationManager(private val context: Context) {
     /**
      * Show notification for new UPI transaction detected
      */
-    fun showNewTransactionNotification(transactionDetails: SmsParser.UPITransactionDetails, expenseId: Long) {
+    fun showNewTransactionNotification(transactionDetails: UPITransactionDetails, expenseId: Long) {
         val intent = createEditExpenseIntent(expenseId)
         val pendingIntent = PendingIntent.getActivity(
             context,

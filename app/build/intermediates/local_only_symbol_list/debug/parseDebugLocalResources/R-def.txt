@@ -7,6 +7,7 @@ drawable ic_list
 drawable ic_notification_expense
 drawable ic_notification_reminder
 drawable ic_notification_success
+drawable icon
 mipmap ic_launcher
 mipmap ic_launcher_round
 string app_name

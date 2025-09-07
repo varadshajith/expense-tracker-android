@@ -6,6 +6,7 @@ import android.os.Build
 import androidx.core.app.NotificationManagerCompat
 import com.expensetracker.app.MainActivity
 import com.expensetracker.app.notification.ExpenseNotificationManager
+import com.expensetracker.app.utils.UPITransactionDetails
 
 object NotificationHelper {
     
@@ -58,7 +59,7 @@ object NotificationHelper {
         expenseId: Long
     ) {
         val notificationManager = ExpenseNotificationManager(context)
-        val transactionDetails = SmsParser.UPITransactionDetails(amount, merchant)
+        val transactionDetails = UPITransactionDetails(amount, merchant)
         notificationManager.showNewTransactionNotification(transactionDetails, expenseId)
     }
     

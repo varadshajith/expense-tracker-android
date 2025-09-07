@@ -23,7 +23,7 @@ fun ValidatedTextField(
     placeholder: String = "",
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     @SuppressLint("ModifierParameter") modifier: Modifier = Modifier,
-    validator: (String) -> ValidationUtils.ValidationResult = { ValidationUtils.ValidationResult.Success },
+    validator: (String) -> ValidationResult = { ValidationResult.Success },
     enabled: Boolean = true,
     singleLine: Boolean = true,
     maxLines: Int = if (singleLine) 1 else Int.MAX_VALUE,
@@ -31,11 +31,11 @@ fun ValidatedTextField(
 ) {
     var isDirty by remember { mutableStateOf(false) }
     val validationResult = remember(value, isDirty) {
-        if (isDirty) validator(value) else ValidationUtils.ValidationResult.Success
+        if (isDirty) validator(value) else ValidationResult.Success
     }
     
-    val hasError = validationResult is ValidationUtils.ValidationResult.Error
-    val errorMessage = (validationResult as? ValidationUtils.ValidationResult.Error).message
+    val hasError = validationResult is ValidationResult.Error
+    val errorMessage = (validationResult as? ValidationResult.Error)?.message
     
     OutlinedTextField(
         value = value,
@@ -48,7 +48,7 @@ fun ValidatedTextField(
         modifier = modifier.fillMaxWidth(),
         keyboardOptions = keyboardOptions,
         isError = hasError,
-        supportingText = errorMessage?.let { { Text(it) } },
+        supportingText = { Text(errorMessage ?: "") },
         enabled = enabled,
         singleLine = singleLine,
         maxLines = maxLines,
@@ -135,7 +135,7 @@ fun ValidatedCategoryField(
 
 @Composable
 fun FormValidationSummary(
-    validationResult: ValidationUtils.FormValidationResult,
+    validationResult: FormValidationResult,
     modifier: Modifier = Modifier
 ) {
     if (!validationResult.isValid && validationResult.errors.isNotEmpty()) {

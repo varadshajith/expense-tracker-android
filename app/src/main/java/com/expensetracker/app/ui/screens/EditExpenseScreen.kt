@@ -18,7 +18,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.expensetracker.app.data.model.Expense
 import com.expensetracker.app.ui.components.ValidatedAmountField
 import com.expensetracker.app.ui.components.ValidatedMerchantField
 import com.expensetracker.app.ui.components.ValidatedDescriptionField
@@ -26,6 +25,9 @@ import com.expensetracker.app.ui.components.FormValidationSummary
 import com.expensetracker.app.utils.ValidationUtils
 import com.expensetracker.app.viewmodel.ExpenseViewModel
 import kotlinx.coroutines.launch
+import com.expensetracker.app.data.model.Expense
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -36,6 +38,7 @@ fun EditExpenseScreen(
 ) {
     val coroutineScope = rememberCoroutineScope()
     val expense by expenseViewModel.currentExpense.collectAsStateWithLifecycle()
+    val currentExpense = expense
 
     var amount by remember { mutableStateOf("") }
     var merchant by remember { mutableStateOf("") }
@@ -61,12 +64,12 @@ fun EditExpenseScreen(
     val isFormValid = formValidationResult.isValid
 
     // Pre-fill form when expense is loaded
-    LaunchedEffect(expense) {
-        if (expense != null) {
-            amount = expense.amount.toString()
-            merchant = expense.merchant
-            description = expense.description ?: ""
-            category = expense.category ?: ""
+    LaunchedEffect(currentExpense) {
+        if (currentExpense != null) {
+            amount = currentExpense.amount.toString()
+            merchant = currentExpense.merchant
+            description = currentExpense.description ?: ""
+            category = currentExpense.category ?: ""
         }
     }
 
@@ -183,9 +186,9 @@ fun EditExpenseScreen(
             )
 
             // Expense Preview (if editing existing expense)
-            if (expense != null) {
+            if (currentExpense != null) {
                 ExpensePreviewCard(
-                    expense = expense,
+                    expense = currentExpense,
                     modifier = Modifier.fillMaxWidth()
                 )
             }
@@ -204,7 +207,7 @@ fun EditExpenseScreen(
                     val sanitizedDescription = ValidationUtils.sanitizeDescription(description)
                     val sanitizedCategory = ValidationUtils.sanitizeCategory(category)
 
-                    val expenseToSave = expense?.copy(
+                    val expenseToSave = currentExpense?.copy(
                         amount = amount.toDouble(),
                         merchant = sanitizedMerchant,
                         description = sanitizedDescription.takeIf { it.isNotBlank() },
@@ -226,10 +229,10 @@ fun EditExpenseScreen(
     // Delete Confirmation Dialog
     if (showDeleteDialog) {
         DeleteExpenseDialog(
-            expense = expense,
+            expense = currentExpense,
             onConfirm = {
                 coroutineScope.launch {
-                    expense?.let { expenseViewModel.deleteExpense(it) }
+                    currentExpense?.let { expenseViewModel.deleteExpense(it) }
                     onNavigateBack()
                 }
             },

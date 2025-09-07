@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.expensetracker.app-mergeDebugResources-73:/values-hu/values-hu.xml",
+            "outputFile": "com.expensetracker.app-mergeDebugResources-74:/values-hu/values-hu.xml",
             "map": [
                 {
                     "source": "C:\\Users\\v3800\\.gradle\\caches\\9.0-milestone-1\\transforms\\8ebc8b61397b968ab28a94f263ee573b\\transformed\\core-1.13.0\\res\\values-hu\\values-hu.xml",
