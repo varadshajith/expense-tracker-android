@@ -1,0 +1,16 @@
+R_DEF: Internal format may change without notice
+local
+drawable ic_edit
+drawable ic_launcher_background
+drawable ic_launcher_foreground
+drawable ic_list
+drawable ic_notification_expense
+drawable ic_notification_reminder
+drawable ic_notification_success
+mipmap ic_launcher
+mipmap ic_launcher_round
+string app_name
+style Base.Theme.ExpenseTracker
+style Theme.ExpenseTracker
+xml backup_rules
+xml data_extraction_rules

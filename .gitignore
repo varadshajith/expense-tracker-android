@@ -1,0 +1,19 @@
+# Android Studio generated files
+.gradle/
+/build/
+/captures/
+.idea/
+*.iml
+local.properties
+.DS_Store
+
+# Keystore files
+*.jks
+*.keystore
+
+# Log files
+*.log
+
+# Other
+.cxx/
+*~
