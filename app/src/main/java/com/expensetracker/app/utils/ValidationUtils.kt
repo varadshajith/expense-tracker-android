@@ -1,11 +1,12 @@
 package com.expensetracker.app.utils
 
+import com.expensetracker.app.utils.ValidationResult.Success
+import com.expensetracker.app.utils.ValidationResult.Error
+
 import java.util.regex.Pattern
 
 object ValidationUtils {
-    enum class ValidationResult {
-
-    }
+    
 
     /**
      * Validates expense amount
@@ -13,10 +14,10 @@ object ValidationUtils {
     fun validateAmount(amount: String): ValidationResult {
         return when {
             amount.isBlank() -> ValidationResult.Error("Amount is required")
-            amount.toDoubleOrNull() == null -> ValidationResult.Error("Invalid amount format")
-            amount.toDouble() <= 0 -> ValidationResult.Error("Amount must be greater than 0")
+                        amount.toDoubleOrNull() == null -> ValidationResult.Error("Invalid amount format")
+            amount.toDouble() <= 0 -> Error("Amount must be greater than 0")
             amount.toDouble() > 999999.99 -> ValidationResult.Error("Amount cannot exceed ₹999,999.99")
-            else -> ValidationResult.Success
+            else -> Success
         }
     }
     
@@ -29,7 +30,7 @@ object ValidationUtils {
             merchant.length < 2 -> ValidationResult.Error("Merchant name must be at least 2 characters")
             merchant.length > 100 -> ValidationResult.Error("Merchant name cannot exceed 100 characters")
             !isValidMerchantName(merchant) -> ValidationResult.Error("Merchant name contains invalid characters")
-            else -> ValidationResult.Success
+            else -> Success
         }
     }
     
@@ -39,7 +40,7 @@ object ValidationUtils {
     fun validateDescription(description: String): ValidationResult {
         return when {
             description.length > 500 -> ValidationResult.Error("Description cannot exceed 500 characters")
-            else -> ValidationResult.Success
+            else -> Success
         }
     }
     
@@ -50,7 +51,7 @@ object ValidationUtils {
         return when {
             category.length > 50 -> ValidationResult.Error("Category cannot exceed 50 characters")
             !isValidCategoryName(category) -> ValidationResult.Error("Category contains invalid characters")
-            else -> ValidationResult.Success
+            else -> Success
         }
     }
     

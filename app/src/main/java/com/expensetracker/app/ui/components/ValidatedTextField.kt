@@ -9,8 +9,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.privacysandbox.tools.core.validator.ValidationResult
 import com.expensetracker.app.utils.ValidationUtils
+import com.expensetracker.app.utils.ValidationResult
+import com.expensetracker.app.utils.FormValidationResult
+import com.expensetracker.app.utils.ValidationResult.Success
+import com.expensetracker.app.utils.ValidationResult.Error
 
 @Composable
 fun ValidatedTextField(
